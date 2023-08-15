@@ -10,6 +10,8 @@ export const useTaxes = () => {
       const jsonData = await fetch(`${globalValues.API}/tax-calculator/tax-year/${input.year}`)
       const data = await jsonData.json();
 
+      if (data.errors) throw new Error('Ops, we can’t calculate your taxes, try again')
+
       let isInRange = true;
       let total = 0;
       let index = 0;
