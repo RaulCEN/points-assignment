@@ -1,0 +1,17 @@
+.tax-result {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.tax-result--amount {
+  font-size: 28px;
+  color: #2F3C88;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.tax-result--label {
+  margin: 0;
+  font-size: 16px;
+  color: #2F3C88;
+}
