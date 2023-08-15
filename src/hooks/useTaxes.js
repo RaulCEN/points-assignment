@@ -33,7 +33,6 @@ export const useTaxes = () => {
 
       }
 
-      console.log('total', total);
       setTotalTaxes(total);
     } catch (error) {
       console.log(error);
