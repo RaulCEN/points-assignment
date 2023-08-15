@@ -4,7 +4,8 @@ Web app to calculate taxes according to annual income and the tax year.
 
 ## Setup
 
-- Create an `.env` file in the root of the project folling the `.env-example` as file example
+- Create an `.env` file in the root of the project folling the `.env-example` as file example.
+- Install app dependencies with `npm install`.
 - Run `npm start` to run the project on dev mode.
 
 
