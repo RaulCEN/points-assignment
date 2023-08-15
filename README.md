@@ -1,13 +1,12 @@
 # Points Take-home assignment
 
-Web app Web app to calculate taxes according to annual income and the tax year.
+Web app to calculate taxes according to annual income and the tax year.
 
 ## Setup
 
 - Create an `.env` file in the root of the project folling the `.env-example` as file example
 - Run `npm start` to run the project on dev mode.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
