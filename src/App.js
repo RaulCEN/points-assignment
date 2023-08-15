@@ -17,6 +17,9 @@ function App() {
   const onChangeTaxYear = input => setTaxYear(input.target.value);
 
   const onCalculate = async () => {
+    setInputError(null);
+
+
     if (isNaN(annualIncomeValue) || annualIncomeValue <= 0) {
       setInputError('Annual income must be a number greater than 0');
       return
@@ -27,7 +30,6 @@ function App() {
     }
 
     await calculateTaxes({ year: taxYearValue, amount: annualIncomeValue });
-    setInputError(null);
   }
 
   return (
@@ -35,11 +37,11 @@ function App() {
       <h1 className='app--title'>Tax Calculator</h1>
 
       <div className='app--input-row'>
-        <Input placeholder='Annual Income' onChange={onChangeAnnualIncome} />
-        <Input placeholder='Tax year' onChange={onChangeTaxYear} />
+        <Input data-testid='annual-income' placeholder='Annual Income' onChange={onChangeAnnualIncome} />
+        <Input data-testid='tax-year' placeholder='Tax year' onChange={onChangeTaxYear} />
       </div>
 
-      <Button onClick={onCalculate}>Calculate</Button>
+      <Button data-testid='calculate-button' onClick={onCalculate}>Calculate</Button>
       <TaxResult amount={totalTaxes} />
       <Error message={error || inputError} />
     </section>
