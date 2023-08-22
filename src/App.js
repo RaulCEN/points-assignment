@@ -2,6 +2,8 @@ import './App.css';
 import { useState } from 'react';
 import { useTaxes } from './hooks/useTaxes';
 
+import { validateAnnualIncomeInput, validateTaxYearInput } from "./utils/validations";
+
 import { Input } from './components/Input';
 import { Button } from './components/Button';
 import { TaxResult } from './components/TaxResult';
@@ -13,7 +15,16 @@ function App() {
   const [inputError, setInputError] = useState(null);
   const { calculateTaxes, totalTaxes, error } = useTaxes();
 
-  const onChangeAnnualIncome = input => setAnnualIncome(input.target.value);
+  const onChangeAnnualIncome = input => {
+    try {
+      const value = input.target.value;
+
+      validateAnnualIncomeInput(value);
+      setAnnualIncome(value);
+    } catch (error) {
+      setInputError(error.message);
+    }
+  };
   const onChangeTaxYear = input => setTaxYear(input.target.value);
 
   const onCalculate = async () => {
