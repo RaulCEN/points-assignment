@@ -25,7 +25,16 @@ function App() {
       setInputError(error.message);
     }
   };
-  const onChangeTaxYear = input => setTaxYear(input.target.value);
+  const onChangeTaxYear = input => {
+    try {
+      const value = input.target.value;
+
+      validateTaxYearInput(value);
+      setTaxYear(value);
+    } catch (error) {
+      setInputError(error.message);
+    }
+  };
 
   const onCalculate = async () => {
     setInputError(null);
