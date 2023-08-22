@@ -8,12 +8,13 @@ import { Input } from './components/Input';
 import { Button } from './components/Button';
 import { TaxResult } from './components/TaxResult';
 import { Error } from './components/Messages';
+import { Loading } from './components/Loading';
 
 function App() {
   const [annualIncomeValue, setAnnualIncome] = useState('');
   const [taxYearValue, setTaxYear] = useState('');
   const [inputError, setInputError] = useState(null);
-  const { calculateTaxes, totalTaxes, error } = useTaxes();
+  const { calculateTaxes, totalTaxes, error, loading } = useTaxes();
 
   const onChangeAnnualIncome = input => {
     try {
@@ -39,19 +40,15 @@ function App() {
   };
 
   const onCalculate = async () => {
-    setInputError(null);
+    try {
+      setInputError(null);
+      validateAnnualIncomeInput(annualIncomeValue);
+      validateTaxYearInput(taxYearValue);
 
-
-    if (isNaN(annualIncomeValue) || annualIncomeValue <= 0) {
-      setInputError('Annual income must be a number greater than 0');
-      return
+      await calculateTaxes({ year: taxYearValue, amount: annualIncomeValue });
+    } catch (error) {
+      setInputError(error.message);
     }
-    if (isNaN(taxYearValue) || taxYearValue <= 0) {
-      setInputError('Tax year must be a number greater than 0');
-      return
-    }
-
-    await calculateTaxes({ year: taxYearValue, amount: annualIncomeValue });
   }
 
   return (
@@ -59,13 +56,32 @@ function App() {
       <h1 className='app--title'>Tax Calculator</h1>
 
       <div className='app--input-row'>
-        <Input data-testid='annual-income' placeholder='Annual Income' onChange={onChangeAnnualIncome} />
-        <Input data-testid='tax-year' placeholder='Tax year' onChange={onChangeTaxYear} />
+        <Input
+          data-testid='annual-income'
+          placeholder='Annual Income'
+          disabled={loading}
+          onChange={onChangeAnnualIncome}
+        />
+
+        <Input
+          data-testid='tax-year'
+          placeholder='Tax year'
+          disabled={loading}
+          onChange={onChangeTaxYear}
+        />
       </div>
 
-      <Button data-testid='calculate-button' disable={!!inputError} onClick={onCalculate}>Calculate</Button>
+      <Button
+        data-testid='calculate-button'
+        disable={!!inputError || loading}
+        onClick={onCalculate}
+      >
+        Calculate
+      </Button>
+
       <TaxResult amount={totalTaxes} />
       <Error message={error || inputError} />
+      <Loading isLoading={loading} />
     </section>
   );
 }

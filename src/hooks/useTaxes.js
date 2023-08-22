@@ -3,10 +3,13 @@ import { globalValues } from '../utils/globalValues';
 
 export const useTaxes = () => {
   const [totalTaxes, setTotalTaxes] = useState(0);
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const calculateTaxes = async (input) => {
     try {
+      setLoading(true);
+
       const jsonData = await fetch(`${globalValues.API}/tax-calculator/tax-year/${input.year}`)
       const data = await jsonData.json();
 
@@ -35,12 +38,15 @@ export const useTaxes = () => {
 
       }
 
+      setLoading(false);
       setTotalTaxes(total);
     } catch (error) {
       console.log(error);
+      setTotalTaxes(0);
       setError(error.message);
+      setLoading(false);
     }
   }
 
-  return { calculateTaxes, totalTaxes, error }
+  return { calculateTaxes, totalTaxes, error, loading }
 }
