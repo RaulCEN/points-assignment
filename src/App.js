@@ -19,6 +19,7 @@ function App() {
     try {
       const value = input.target.value;
 
+      setInputError(null);
       validateAnnualIncomeInput(value);
       setAnnualIncome(value);
     } catch (error) {
@@ -29,6 +30,7 @@ function App() {
     try {
       const value = input.target.value;
 
+      setInputError(null);
       validateTaxYearInput(value);
       setTaxYear(value);
     } catch (error) {
@@ -61,7 +63,7 @@ function App() {
         <Input data-testid='tax-year' placeholder='Tax year' onChange={onChangeTaxYear} />
       </div>
 
-      <Button data-testid='calculate-button' onClick={onCalculate}>Calculate</Button>
+      <Button data-testid='calculate-button' disable={!!inputError} onClick={onCalculate}>Calculate</Button>
       <TaxResult amount={totalTaxes} />
       <Error message={error || inputError} />
     </section>

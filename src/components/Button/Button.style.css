@@ -5,3 +5,7 @@
   background: #2F3C88;
   padding: 1rem 0;
 }
+
+.button:disabled {
+  background-color: #c6c6c6;
+}
